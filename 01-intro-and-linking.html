@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 01 - Introduction to CSS | Zero to Hero</title>
+
+  <!-- 3. External CSS (Recommended & Industry Standard) -->
+  <link rel="stylesheet" href="01-introduction.css">
+
+  <!-- 2. Internal CSS (Used for document-level styles) -->
+  <style>
+    /* Styling specifically for internal demo container */
+    .internal-box {
+      background-color: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .internal-box p {
+      color: #0d9488;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header class="header">
+    <span class="badge">Day 01</span>
+    <h1>Introduction to CSS</h1>
+    <p class="subtitle">Anatomy of CSS rules, Cascade behavior, and Linking methods.</p>
+  </header>
+
+  <main class="container">
+
+    <!-- Section 1: The 3 Ways to Apply CSS -->
+    <section class="card">
+      <h2>1. The 3 Methods to Add CSS</h2>
+      
+      <!-- Method A: Inline CSS -->
+      <div class="demo-block">
+        <h3>A. Inline CSS</h3>
+        <p>Applied directly inside an HTML tag using the <code>style</code> attribute.</p>
+        <p style="color: #dc2626; font-size: 1.05rem; font-weight: bold; background: #fee2e2; padding: 0.75rem; border-radius: 6px;">
+          This text is styled via Inline CSS (Highest Specificity, Avoid in Production).
+        </p>
+      </div>
+
+      <!-- Method B: Internal CSS -->
+      <div class="demo-block">
+        <h3>B. Internal CSS</h3>
+        <p>Defined inside the <code>&lt;style&gt;</code> tag in the HTML <code>&lt;head&gt;</code>.</p>
+        <div class="internal-box">
+          <p>This text is styled via Internal CSS rules inside the &lt;head&gt; tag.</p>
+        </div>
+      </div>
+
+      <!-- Method C: External CSS -->
+      <div class="demo-block">
+        <h3>C. External CSS</h3>
+        <p>Linked via an external file (<code>01-introduction.css</code>) using the <code>&lt;link&gt;</code> tag.</p>
+        <div class="external-box">
+          <p>This box is entirely styled via the external stylesheet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: CSS Rule Anatomy -->
+    <section class="card">
+      <h2>2. CSS Rule Anatomy</h2>
+      <div class="syntax-guide">
+        <pre><code><span class="hl-selector">selector</span> {
+  <span class="hl-property">property</span>: <span class="hl-value">value</span>;
+}</code></pre>
+      </div>
+      <p class="note">
+        <strong>Selector:</strong> Targets the element (`h1`, `.card`, `#id`).<br>
+        <strong>Declaration:</strong> Property + Value pair terminated by a semicolon.
+      </p>
+    </section>
+
+    <!-- Section 3: Interactive Practice Card -->
+    <section class="card profile-card">
+      <div class="avatar">KV</div>
+      <h3 class="user-name">Krunal Viradiya</h3>
+      <p class="user-role">Full-Stack Web Developer</p>
+      <p class="user-bio">
+        Mastering CSS from ground zero to layout architecture and modern responsive systems.
+      </p>
+      <button type="button" class="btn-primary">View Day 02</button>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>CSS: Zero to Hero &bull; Module 01 Execution</p>
+  </footer>
+
+</body>
+</html>
