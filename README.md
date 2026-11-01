@@ -32,7 +32,7 @@ This repository documents a structured, module-by-module breakdown of pure CSS. 
 ### 🟢 Phase 1: Core Fundamentals & Cascade Mechanics
 | Module | File | Description |
 | :--- | :--- | :--- |
-| **01** | `01-intro-and-linking.html` | CSS kya hai, browser styling kaise apply karta hai, inline vs internal vs external linking. |
+| **01** | `01-intro-and-linking.html and Day_1_CSS.md` | CSS kya hai, browser styling kaise apply karta hai, inline vs internal vs external linking. |
 | **02** | `02-selectors-and-specificity.html` | Universal, element, class, id selectors, specificity score calculations, aur `!important` rule. |
 | **03** | `03-cascade-and-inheritance.html` | Cascade algorithm, inheritance behavior, initial/inherit/unset values, aur browser default styles. |
 | **04** | `04-colors-and-units.html` | Colors (`HEX`, `RGB`, `RGBA`, `HSL`), absolute vs relative units (`px`, `rem`, `em`, `vw`, `vh`, `%`). |
