@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02 - Selectors & Specificity</title>
+  
+  <style>
+    /* ==========================================================================
+       THEORY & NOTES:
+       
+       1. Specificity Weights:
+          - Inline Style   : (1, 0, 0, 0) -> Highest normal priority
+          - ID Selector    : (0, 1, 0, 0)
+          - Class Selector : (0, 0, 1, 0)
+          - Element (Type) : (0, 0, 0, 1)
+          - Universal (*)  : (0, 0, 0, 0) -> Lowest priority
+          
+       2. !important Rule:
+          - Specificity calculation ko bypass karta hai.
+          - Normal cascade order tod deta hai, isliye overuse avoid karo.
+       ========================================================================== */
+
+    /* Universal Selector (0, 0, 0, 0) */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      margin-bottom: 12px;
+      color: #61dafb;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Element Selector (0, 0, 0, 1) */
+    p {
+      color: #888888;
+      margin-bottom: 8px;
+    }
+
+    /* 2. Class Selector (0, 0, 1, 0) -> Beats Element */
+    .highlight {
+      color: #f1c40f;
+    }
+
+    /* 3. ID Selector (0, 1, 0, 0) -> Beats Class and Element */
+    #champion {
+      color: #2ecc71;
+      font-weight: bold;
+    }
+
+    /* 4. Score Calculation: Two classes (0, 0, 2, 0) beats one class (0, 0, 1, 0) */
+    .card.special {
+      color: #e67e22;
+    }
+
+    /* 5. !important: Overrides ID & Inline styles */
+    .force-win {
+      color: #e74c3c !important;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 02: Selectors & Specificity</h1>
+
+  <!-- Basic Selectors Hierarchy -->
+  <h2>1. Hierarchy (Element vs Class vs ID)</h2>
+  <p>Element Selector (0, 0, 0, 1) - Default grey</p>
+  <p class="highlight">Class Selector (0, 0, 1, 0) - Yellow</p>
+  <p id="champion" class="highlight">ID Selector (0, 1, 0, 0) - Green (Wins over class)</p>
+
+  <hr>
+
+  <!-- Specificity Score Calculation -->
+  <h2>2. Specificity Calculation</h2>
+  <p class="card special">Two classes (.card.special) have higher score than a single class.</p>
+
+  <hr>
+
+  <!-- !important Demonstration -->
+  <h2>3. The !important Rule</h2>
+  <p id="champion" class="force-win">
+    ID selector laga hai, fir bhi red hai kyunki .force-win me !important use hua hai.
+  </p>
+  <p style="color: blue;" class="force-win">
+    Inline style (blue) laga hai, fir bhi !important ne override kar diya.
+  </p>
+
+</body>
+</html>
