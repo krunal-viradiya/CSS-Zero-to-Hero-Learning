@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03 - Cascade & Inheritance</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. The Cascade Algorithm (Resolution Order):
+          - Importance: Normal rules vs !important directives
+          - Origin: User Agent (Browser defaults) < User styles < Author styles (Developer)
+          - Specificity: Higher weight wins (Inline > ID > Class > Element)
+          - Source Order: When specificity is identical, the last declared rule wins
+          
+       2. Inheritance Mechanics:
+          - Naturally Inherited: Typography & text properties (color, font-family, line-height, text-align)
+          - Non-Inherited by Default: Box model & layout properties (margin, padding, border, width, background)
+          
+       3. Global CSS Keyword Values:
+          - inherit : Forces an element to take the computed value from its parent
+          - initial : Resets a property to the official CSS specification default value
+          - unset   : Acts like inherit if the property is naturally inherited, otherwise acts like initial
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Source Order (Cascade): Last declared rule wins */
+    .cascade-box {
+      color: #e74c3c; /* Red (Overwritten) */
+      color: #2ecc71; /* Green (Wins due to source order) */
+    }
+
+    /* 2. Inherited vs Non-Inherited Properties */
+    .parent-card {
+      color: #f1c40f;         /* Inherited: Child elements receive yellow text */
+      font-size: 18px;        /* Inherited: Font size cascades downward */
+      border: 2px solid #333; /* Non-Inherited: Borders do not pass to children */
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .child-box {
+      background-color: #1e1e1e;
+      padding: 8px;
+    }
+
+    /* 3. Global Reset Keywords */
+    .explicit-border {
+      border: 2px dashed #3498db;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    /* Force child to inherit an otherwise non-inherited property */
+    .force-inherit-border {
+      border: inherit;
+      padding: 6px;
+      margin-top: 6px;
+    }
+
+    /* Reset property explicitly to CSS specification initial default */
+    .reset-initial {
+      color: initial; /* Resets text to browser default (black) */
+      background-color: #ffffff;
+      padding: 6px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 03: Cascade & Inheritance</h1>
+
+  <!-- 1. The Cascade (Source Order) -->
+  <h2>1. Cascade Source Order</h2>
+  <p class="cascade-box">
+    This text is green because the later declaration overrides the earlier one when specificity is equal.
+  </p>
+
+  <hr>
+
+  <!-- 2. Natural Inheritance -->
+  <h2>2. Natural Inheritance</h2>
+  <div class="parent-card">
+    Parent: Text color (yellow) and font size are defined here.
+    <div class="child-box">
+      Child: Typography properties (<code>color</code>, <code>font-size</code>) are inherited, while <code>border</code> is not.
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 3. Explicit Keywords: inherit & initial -->
+  <h2>3. Global Values (<code>inherit</code>, <code>initial</code>)</h2>
+  <div class="explicit-border">
+    Parent container with a blue dashed border.
+    
+    <div class="force-inherit-border">
+      Child with <code>border: inherit;</code> (Forces a non-inherited property to copy the parent value).
+    </div>
+
+    <div class="reset-initial">
+      Child with <code>color: initial;</code> (Explicitly resets the color property back to the CSS standard default).
+    </div>
+  </div>
+
+</body>
+</html>
