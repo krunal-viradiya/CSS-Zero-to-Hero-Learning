@@ -9,15 +9,15 @@
        THEORY & NOTES:
        
        1. Specificity Weights:
-          - Inline Style   : (1, 0, 0, 0) -> Highest normal priority
+          - Inline Style   : (1, 0, 0, 0) -> Highest standard priority
           - ID Selector    : (0, 1, 0, 0)
           - Class Selector : (0, 0, 1, 0)
           - Element (Type) : (0, 0, 0, 1)
           - Universal (*)  : (0, 0, 0, 0) -> Lowest priority
           
        2. !important Rule:
-          - Specificity calculation ko bypass karta hai.
-          - Normal cascade order tod deta hai, isliye overuse avoid karo.
+          - Bypasses standard specificity calculations.
+          - Breaks normal cascade resolution order; avoid overuse in production.
        ========================================================================== */
 
     /* Universal Selector (0, 0, 0, 0) */
@@ -88,17 +88,17 @@
 
   <!-- Specificity Score Calculation -->
   <h2>2. Specificity Calculation</h2>
-  <p class="card special">Two classes (.card.special) have higher score than a single class.</p>
+  <p class="card special">Two chained classes (.card.special) have higher specificity than a single class.</p>
 
   <hr>
 
   <!-- !important Demonstration -->
   <h2>3. The !important Rule</h2>
   <p id="champion" class="force-win">
-    ID selector laga hai, fir bhi red hai kyunki .force-win me !important use hua hai.
+    Targeted by an ID selector, yet rendered red because .force-win uses !important.
   </p>
   <p style="color: blue;" class="force-win">
-    Inline style (blue) laga hai, fir bhi !important ne override kar diya.
+    Configured with an inline style (blue), yet overridden by !important.
   </p>
 
 </body>
