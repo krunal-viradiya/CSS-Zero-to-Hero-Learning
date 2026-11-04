@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>04 - Colors & Units</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Color Formats:
+          - Named Colors : Basic keywords (red, blue, coral).
+          - HEX          : Base-16 values (#RRGGBB or #RRGGBBAA with alpha).
+          - RGB / RGBA   : Red, Green, Blue channels (0-255), optional Alpha (0-1).
+          - HSL / HSLA   : Hue (0-360 deg), Saturation (0-100%), Lightness (0-100%).
+
+       2. CSS Sizing Units:
+          - Absolute Units:
+            * px : Fixed physical pixels. Does not adapt to user root font-size.
+          - Relative Units:
+            * rem : Relative to the root (<html>) font-size (default: 1rem = 16px).
+            * em  : Relative to the element's current font-size (compounds in nested tags).
+            * %   : Relative to the parent element's dimensions.
+            * vw  : 1% of viewport width.
+            * vh  : 1% of viewport height.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Color Models */
+    .color-grid {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .color-swatch {
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .hex-swatch  { background-color: #e67e22; color: #fff; }
+    .rgb-swatch  { background-color: rgb(46, 204, 113); color: #000; }
+    .rgba-swatch { background-color: rgba(52, 152, 219, 0.5); color: #fff; }
+    .hsl-swatch  { background-color: hsl(280, 80%, 60%); color: #fff; }
+
+    /* 2. Absolute vs Relative Units (px vs rem vs em) */
+    .unit-box-px {
+      font-size: 16px; /* Fixed: ignores root browser settings */
+      margin-bottom: 8px;
+    }
+
+    .unit-box-rem {
+      font-size: 1.25rem; /* 1.25 * 16px = 20px (Accessible & recommended) */
+      color: #f1c40f;
+      margin-bottom: 8px;
+    }
+
+    .em-parent {
+      font-size: 14px;
+      background: #1e1e1e;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    .em-child {
+      font-size: 1.5em; /* 1.5 * 14px = 21px (Depends on parent font-size) */
+      color: #2ecc71;
+    }
+
+    /* 3. Viewport Units */
+    .viewport-box {
+      width: 50vw; /* Takes 50% of screen width */
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 12px;
+      border-left: 4px solid #3498db;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 04: Colors & Sizing Units</h1>
+
+  <!-- 1. Color Representation Formats -->
+  <h2>1. Color Models</h2>
+  <div class="color-grid">
+    <div class="color-swatch hex-swatch">HEX (#e67e22)</div>
+    <div class="color-swatch rgb-swatch">RGB (46, 204, 113)</div>
+    <div class="color-swatch rgba-swatch">RGBA (50% Alpha)</div>
+    <div class="color-swatch hsl-swatch">HSL (Hue 280)</div>
+  </div>
+
+  <hr>
+
+  <!-- 2. Typography Units -->
+  <h2>2. Sizing Units (px, rem, em)</h2>
+  <p class="unit-box-px">Fixed: 16px font-size.</p>
+  <p class="unit-box-rem">Root relative: 1.25rem (Scales with user browser root).</p>
+
+  <div class="em-parent">
+    Parent container: font-size is 14px.
+    <p class="em-child">Child: 1.5em (Calculated as 1.5 &times; 14px = 21px).</p>
+  </div>
+
+  <hr>
+
+  <!-- 3. Viewport Responsive Units -->
+  <h2>3. Viewport Units (vw / vh)</h2>
+  <div class="viewport-box">
+    Width set to <code>50vw</code> (Occupies exactly half of the current viewport width).
+  </div>
+
+</body>
+</html>
