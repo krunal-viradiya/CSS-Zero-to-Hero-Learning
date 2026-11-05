@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>05 - Typography & Fonts</title>
+
+  <!-- Google Fonts CDN link for external web font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Font Families & Fallbacks:
+          - Web Safe Fonts : Pre-installed OS fonts (Arial, Times New Roman, Courier).
+          - Font Stack     : 'Font Name', FallbackFont, GenericFamily (serif, sans-serif, monospace).
+          - Web Fonts      : Loaded via <link> or @import (e.g., Google Fonts).
+          
+       2. Core Text Properties:
+          - font-size       : Physical or relative scale of glyphs (rem, px).
+          - font-weight     : Stroke thickness (100–900; 400 = normal, 700 = bold).
+          - line-height     : Vertical distance between baselines (unitless 1.5 is standard).
+          - letter-spacing  : Horizontal spacing between characters (tracking).
+          
+       3. Text Formatting & Transformations:
+          - text-transform  : uppercase, lowercase, capitalize, none.
+          - text-decoration : underline, line-through, none (used to clear <a> tags).
+          - text-align      : left, right, center, justify.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Web Font vs System Font Stack */
+    .font-system {
+      font-family: Georgia, "Times New Roman", serif;
+      color: #cbd5e1;
+      margin-bottom: 8px;
+    }
+
+    .font-web {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      color: #f1c40f;
+    }
+
+    /* 2. Font Weight & Line Height Scaling */
+    .weight-light {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      margin-bottom: 6px;
+    }
+
+    .weight-bold {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .leading-demo {
+      background-color: #1e1e1e;
+      padding: 12px;
+      border-left: 3px solid #2ecc71;
+      line-height: 1.8; /* Unitless value scales with font-size */
+      font-size: 0.95rem;
+    }
+
+    /* 3. Text Transformations & Spacing */
+    .transform-upper {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #e67e22;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .clean-link {
+      color: #38bdf8;
+      text-decoration: none; /* Removes default link underline */
+      border-bottom: 1px dashed #38bdf8;
+      transition: color 0.2s ease;
+    }
+
+    .clean-link:hover {
+      color: #60a5fa;
+      border-bottom-style: solid;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 05: Typography & Fonts</h1>
+
+  <!-- 1. Font Family & Stacks -->
+  <h2>1. Font Families & Web Fonts</h2>
+  <p class="font-system">System Serif: Georgia, 'Times New Roman', serif</p>
+  <p class="font-web">Imported Web Font: 'Poppins' via Google Fonts (600 Weight)</p>
+
+  <hr>
+
+  <!-- 2. Font Weight & Vertical Rhythm -->
+  <h2>2. Font Weights & Line Height</h2>
+  <p class="weight-light">Light text weight (300) for delicate subheadings.</p>
+  <p class="weight-bold">Bold text weight (700) for high visual hierarchy.</p>
+  <div class="leading-demo">
+    Unitless <code>line-height: 1.8;</code> provides comfortable reading flow without overlapping lines across different display densities and viewport scaling factors.
+  </div>
+
+  <hr>
+
+  <!-- 3. Text Transformations & Decoration -->
+  <h2>3. Formatting & Spacing Controls</h2>
+  <p class="transform-upper">Uppercase transformed text with 2px letter-spacing</p>
+  <p>
+    Hyperlink with cleared underline: 
+    <a href="#" class="clean-link">Clean Hover Anchor Link</a>
+  </p>
+
+</body>
+</html>
