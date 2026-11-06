@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>06 - CSS Box Model</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Box Model Layers (Inside to Outside):
+          - Content : Actual text, image, or nested element area.
+          - Padding : Transparent space between content and border.
+          - Border  : Line wrapping the padding and content.
+          - Margin  : Clear space outside the border separating sibling elements.
+
+       2. Sizing Calculations (box-sizing):
+          - content-box (Default):
+            Total Width = width + padding-left + padding-right + border-left + border-right
+            (Box expands outward unexpectedly).
+          - border-box (Modern Standard):
+            Total Width = width (Padding & borders are absorbed inside the defined width).
+
+       3. Margin Collapsing:
+          - Vertical margins of adjacent block elements collapse into a single margin
+            equal to the largest of the two margins (does not happen horizontally).
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box; /* Universal best practice */
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Visual Box Model Layering */
+    .box-anatomy {
+      background-color: #f39c12; /* Margin visual (parent background) */
+      padding: 20px;            /* Acts as margin representation */
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .border-layer {
+      border: 6px solid #e74c3c; /* Border */
+      background-color: #27ae60; /* Padding visual */
+      padding: 20px;             /* Padding */
+    }
+
+    .content-layer {
+      background-color: #2980b9; /* Content */
+      padding: 12px 18px;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /* 2. box-sizing: content-box vs border-box */
+    .comparison-container {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .box-content {
+      box-sizing: content-box;
+      width: 200px;
+      padding: 20px;
+      border: 5px solid #e67e22;
+      background-color: #1e1e1e;
+      /* Computed Rendered Width = 200 + 40 + 10 = 250px */
+    }
+
+    .box-border {
+      box-sizing: border-box;
+      width: 200px;
+      padding: 20px;
+      border: 5px solid #2ecc71;
+      background-color: #1e1e1e;
+      /* Computed Rendered Width = exactly 200px */
+    }
+
+    /* 3. Margin Collapsing Demo */
+    .collapse-box-1 {
+      background-color: #34495e;
+      padding: 10px;
+      margin-bottom: 30px; /* 30px margin below */
+    }
+
+    .collapse-box-2 {
+      background-color: #2c3e50;
+      padding: 10px;
+      margin-top: 20px;    /* 20px margin above */
+      /* Effective gap is 30px (MAX), NOT 50px (SUM) */
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 06: The CSS Box Model</h1>
+
+  <!-- 1. The 4 Layers -->
+  <h2>1. Box Anatomy (Margin, Border, Padding, Content)</h2>
+  <div class="box-anatomy">
+    <div class="border-layer">
+      <div class="content-layer">
+        Content Area
+      </div>
+    </div>
+  </div>
+  <p><small>Orange: Margin | Red: Border | Green: Padding | Blue: Content</small></p>
+
+  <hr>
+
+  <!-- 2. content-box vs border-box -->
+  <h2>2. box-sizing: content-box vs border-box</h2>
+  <div class="comparison-container">
+    <div class="box-content">
+      <strong>content-box</strong><br>
+      width: 200px<br>
+      Rendered: 250px
+    </div>
+
+    <div class="box-border">
+      <strong>border-box</strong><br>
+      width: 200px<br>
+      Rendered: 200px
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 3. Margin Collapsing -->
+  <h2>3. Vertical Margin Collapsing</h2>
+  <div class="collapse-box-1">
+    Box A (<code>margin-bottom: 30px;</code>)
+  </div>
+  <div class="collapse-box-2">
+    Box B (<code>margin-top: 20px;</code>) &rarr; Actual vertical space collapses to <strong>30px</strong>.
+  </div>
+
+</body>
+</html>
