@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>07 - Display Properties</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Core Display Values:
+          - block:
+            * Starts on a fresh line.
+            * Occupies 100% of parent width by default.
+            * Respects width, height, margin, and padding on all 4 sides.
+            * Examples: <div>, <p>, <h1>, <section>.
+
+          - inline:
+            * Stays within the normal text flow without line breaks.
+            * Width & height properties are completely ignored.
+            * Top/bottom margins and paddings do not push surrounding lines away.
+            * Examples: <span>, <a>, <strong>, <em>.
+
+          - inline-block:
+            * Sits inline with text flow (no line break).
+            * Fully respects width, height, padding, and vertical margins.
+            * Ideal for buttons, badges, and inline UI chips.
+
+       2. Removal & Hiding (display: none vs visibility: hidden):
+          - display: none;
+            * Removes element entirely from document flow (DOM exists, 0px space).
+          - visibility: hidden;
+            * Hides visually, but keeps its original footprint/space on screen.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Block Elements */
+    .block-box {
+      display: block;
+      background-color: #1e3a8a;
+      color: #93c5fd;
+      padding: 10px 16px;
+      margin-bottom: 8px;
+      width: 60%;
+    }
+
+    /* 2. Inline Elements */
+    .inline-box {
+      display: inline;
+      background-color: #065f46;
+      color: #6ee7b7;
+      padding: 4px 8px; /* Vertical padding renders but won't shift line height */
+      width: 200px;     /* Ignored by browser */
+      height: 100px;    /* Ignored by browser */
+    }
+
+    /* 3. Inline-Block Elements */
+    .inline-block-box {
+      display: inline-block;
+      background-color: #7c2d12;
+      color: #fdba74;
+      padding: 8px 14px;
+      margin: 6px 4px;
+      width: 140px;
+      text-align: center;
+      border-radius: 4px;
+    }
+
+    /* 4. display: none vs visibility: hidden */
+    .hide-container {
+      display: flex;
+      gap: 12px;
+      background-color: #1f2937;
+      padding: 12px;
+      margin-top: 8px;
+    }
+
+    .static-item {
+      background-color: #374151;
+      padding: 10px 16px;
+      border-radius: 4px;
+    }
+
+    .box-none {
+      display: none; /* Takes no space */
+    }
+
+    .box-hidden {
+      visibility: hidden; /* Invisible, but space remains */
+      background-color: #dc2626;
+      padding: 10px 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 07: Display Properties</h1>
+
+  <!-- 1. Block Level -->
+  <h2>1. display: block</h2>
+  <div class="block-box">Block 1: Takes full line (custom width: 60%)</div>
+  <div class="block-box">Block 2: Forces next line automatically</div>
+
+  <hr>
+
+  <!-- 2. Inline Level -->
+  <h2>2. display: inline</h2>
+  <p>
+    Normal paragraph text containing an 
+    <span class="inline-box">inline span</span> 
+    that flows with text. Width & height are ignored.
+  </p>
+
+  <hr>
+
+  <!-- 3. Inline-Block Level -->
+  <h2>3. display: inline-block</h2>
+  <div>
+    <div class="inline-block-box">Item 1 (140px)</div>
+    <div class="inline-block-box">Item 2 (140px)</div>
+    <div class="inline-block-box">Item 3 (140px)</div>
+  </div>
+
+  <hr>
+
+  <!-- 4. Hiding Elements -->
+  <h2>4. display: none vs visibility: hidden</h2>
+  <div class="hide-container">
+    <div class="static-item">Box A</div>
+    <div class="box-none">Box B (display: none - collapsed)</div>
+    <div class="box-hidden">Box C (hidden)</div>
+    <div class="static-item">Box D (after hidden space)</div>
+  </div>
+
+</body>
+</html>
