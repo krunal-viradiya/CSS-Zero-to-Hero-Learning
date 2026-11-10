@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>08 - Backgrounds & Borders</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Background Essentials:
+          - background-color : Solid fallback fill (HEX, RGB, HSL).
+          - background-image : url(), linear-gradient(), radial-gradient().
+          - background-size  : 
+            * cover   : Fills container completely (crops excess).
+            * contain : Preserves aspect ratio, fits entirely without cropping.
+            * auto / custom (px, %): Explicit sizing.
+          - background-repeat   : no-repeat, repeat-x, repeat-y, repeat.
+          - background-position : Alignment anchor (center, top right, 50% 50%).
+
+       2. Border Properties:
+          - Shorthand: border: <width> <style> <color>;
+          - Styles: solid, dashed, dotted, double, none.
+          - Individual sides: border-top, border-right, border-bottom, border-left.
+
+       3. Border Radius & Outlines:
+          - border-radius : Rounds corners (% or px; 50% creates circles on equal dimensions).
+          - outline       : Outside the border line, does NOT consume Box Model space.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Gradients */
+    .gradient-linear {
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      padding: 16px;
+      border-radius: 8px;
+      color: #ffffff;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .gradient-radial {
+      background: radial-gradient(circle at center, #0284c7, #0f172a);
+      padding: 16px;
+      border-radius: 8px;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    /* 2. Background Patterns & Sizing */
+    .bg-stripes {
+      height: 70px;
+      background-color: #1e293b;
+      background-image: repeating-linear-gradient(
+        45deg,
+        #334155,
+        #334155 10px,
+        #1e293b 10px,
+        #1e293b 20px
+      );
+      border-radius: 6px;
+    }
+
+    /* 3. Border Variants & Radii */
+    .border-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .border-card {
+      width: 140px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #1e1e1e;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .border-solid  { border: 2px solid #22c55e; border-radius: 6px; }
+    .border-dashed { border: 2px dashed #f59e0b; border-radius: 12px; }
+    .border-circle { width: 80px; height: 80px; border: 2px solid #38bdf8; border-radius: 50%; }
+
+    /* 4. Border vs Outline */
+    .outline-demo {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: #1e293b;
+      border: 3px solid #ef4444;    /* Consumes layout dimensions */
+      outline: 3px dashed #38bdf8;  /* Rendered outside layout footprint */
+      outline-offset: 4px;          /* Air gap between border and outline */
+      margin: 10px 0 0 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 08: Backgrounds & Borders</h1>
+
+  <!-- 1. Gradient Backgrounds -->
+  <h2>1. CSS Gradients</h2>
+  <div class="gradient-linear">Linear Gradient (135deg, Indigo to Pink)</div>
+  <div class="gradient-radial">Radial Gradient (Sky Blue to Dark Slate)</div>
+
+  <hr>
+
+  <!-- 2. Pattern Fill -->
+  <h2>2. Repeating Background Pattern</h2>
+  <div class="bg-stripes"></div>
+
+  <hr>
+
+  <!-- 3. Border Types & Border Radius -->
+  <h2>3. Border Styles & Border Radius</h2>
+  <div class="border-grid">
+    <div class="border-card border-solid">Solid (6px Radius)</div>
+    <div class="border-card border-dashed">Dashed (12px Radius)</div>
+    <div class="border-card border-circle">Circle (50%)</div>
+  </div>
+
+  <hr>
+
+  <!-- 4. Border vs Outline -->
+  <h2>4. Border vs Outline (Layout Geometry)</h2>
+  <p>
+    Red line is <code>border</code> (affects Box Model). Cyan line is 
+    <code>outline</code> with an offset (drawn outside document flow):
+  </p>
+  <div class="outline-demo">
+    Inspecting Outline Offset
+  </div>
+
+</body>
+</html>
