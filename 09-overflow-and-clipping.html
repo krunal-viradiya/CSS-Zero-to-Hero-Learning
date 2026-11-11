@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>09 - Overflow & Clipping</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Overflow Behavior:
+          Controls what happens when content exceeds its container's dimensions.
+          - visible (Default): Content spills outside container boundaries.
+          - hidden           : Excess content is clipped and completely invisible.
+          - scroll           : Adds scrollbars permanently (both X and Y directions).
+          - auto             : Adds scrollbars dynamically only when content overflows.
+
+       2. Directional Overflow:
+          - overflow-x : Controls horizontal overflow (e.g., table or chip scrollers).
+          - overflow-y : Controls vertical overflow (e.g., chat logs or modal bodies).
+
+       3. Text Truncation (Single Line):
+          Requires 3 coordinated properties:
+          - white-space   : nowrap;
+          - overflow      : hidden;
+          - text-overflow : ellipsis;
+
+       4. Modern Clipping (clip-path):
+          - Cuts out visible regions using geometric shapes (circle, polygon).
+          - Elements outside the path are non-interactive and unrendered.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Overflow Containers Grid */
+    .overflow-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .box {
+      width: 170px;
+      height: 100px;
+      background-color: #1e293b;
+      border: 1px solid #475569;
+      padding: 10px;
+      font-size: 0.85rem;
+      border-radius: 6px;
+    }
+
+    .flow-visible {
+      overflow: visible;
+    }
+
+    .flow-hidden {
+      overflow: hidden;
+    }
+
+    .flow-scroll {
+      overflow-y: scroll;
+    }
+
+    .flow-auto {
+      overflow: auto;
+    }
+
+    /* 2. Single-Line Text Ellipsis */
+    .truncate-box {
+      width: 260px;
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      padding: 10px 14px;
+      border-radius: 6px;
+      white-space: nowrap;       /* Prevents text from wrapping to line 2 */
+      overflow: hidden;          /* Crops the exceeding width */
+      text-overflow: ellipsis;   /* Appends '...' at the cutoff boundary */
+    }
+
+    /* 3. clip-path Geometric Shapes */
+    .clip-grid {
+      display: flex;
+      gap: 20px;
+      margin-top: 8px;
+    }
+
+    .clip-shape {
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #0f172a;
+    }
+
+    .shape-circle {
+      clip-path: circle(50% at 50% 50%);
+    }
+
+    .shape-polygon {
+      /* Cuts a hexagon / arrow shape */
+      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 09: Overflow & Clipping</h1>
+
+  <!-- 1. Overflow Modes -->
+  <h2>1. Standard Overflow Types (Fixed 100px Height)</h2>
+  <div class="overflow-grid">
+    <div class="box flow-visible">
+      <strong>visible:</strong> Text bleeds right out of this box boundary without scrollbars.
+    </div>
+
+    <div class="box flow-hidden">
+      <strong>hidden:</strong> Exceeding text is chopped off cleanly at the outer padding edge.
+    </div>
+
+    <div class="box flow-scroll">
+      <strong>scroll:</strong> Scrollbars stay present permanently regardless of content length.
+    </div>
+
+    <div class="box flow-auto">
+      <strong>auto:</strong> Scrollbars appear strictly when content requires vertical scrolling.
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 2. Text Overflow Ellipsis -->
+  <h2>2. Single-Line Ellipsis Truncation</h2>
+  <div class="truncate-box" title="Full Stack JavaScript & MERN Development Pipeline">
+    Full Stack JavaScript & MERN Development Pipeline
+  </div>
+
+  <hr>
+
+  <!-- 3. Geometric Clipping -->
+  <h2>3. Geometric Clipping (clip-path)</h2>
+  <div class="clip-grid">
+    <div class="clip-shape shape-circle">Circle</div>
+    <div class="clip-shape shape-polygon">Hexagon</div>
+  </div>
+
+</body>
+</html>
