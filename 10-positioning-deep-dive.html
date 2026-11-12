@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>10 - Positioning Deep Dive</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Position Modes:
+          - static (Default): Follows normal document flow. top/right/bottom/left/z-index have no effect.
+          - relative        : Offset from its normal position; original space remains preserved in flow.
+          - absolute        : Removed from normal document flow; positioned relative to the nearest
+                              positioned ancestor (anything other than static), otherwise the viewport.
+          - fixed           : Removed from flow; pinned relative to the browser viewport (ignores scrolling).
+          - sticky          : Hybrid (relative + fixed); scrolls normally until crossing a threshold,
+                              then sticks inside its parent container.
+
+       2. Stacking Context & z-index:
+          - z-index controls vertical paint order (higher number sits on top).
+          - Only works on positioned elements (relative, absolute, fixed, sticky) or flex/grid children.
+          - Creating a new stacking context (e.g., opacity < 1, transform, or positioned + z-index)
+            isolates child z-indices from outside elements.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+      min-height: 140vh; /* Extra height to test fixed & sticky scrolling */
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Relative vs Absolute */
+    .parent-anchor {
+      position: relative; /* Establishes positioning boundary for absolute children */
+      background-color: #1e293b;
+      border: 1px solid #475569;
+      padding: 20px;
+      height: 120px;
+      border-radius: 8px;
+    }
+
+    .relative-nudge {
+      position: relative;
+      top: 10px;
+      left: 15px;
+      background-color: #334155;
+      padding: 6px 12px;
+      display: inline-block;
+      border-radius: 4px;
+    }
+
+    .absolute-badge {
+      position: absolute;
+      top: -10px;
+      right: 12px;
+      background-color: #ef4444;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    /* 2. Sticky Header Inside Scroll Container */
+    .scroll-box {
+      height: 140px;
+      overflow-y: auto;
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 6px;
+    }
+
+    .sticky-banner {
+      position: sticky;
+      top: 0;
+      background-color: #0284c7;
+      color: #ffffff;
+      padding: 6px 12px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    .scroll-content {
+      padding: 12px;
+    }
+
+    /* 3. Stacking Context & z-index */
+    .stack-stage {
+      position: relative;
+      height: 100px;
+    }
+
+    .layer {
+      position: absolute;
+      width: 130px;
+      height: 65px;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .layer-1 {
+      top: 0;
+      left: 0;
+      background-color: #6366f1;
+      z-index: 1;
+    }
+
+    .layer-2 {
+      top: 20px;
+      left: 50px;
+      background-color: #10b981;
+      z-index: 10; /* Higher z-index paints above layer-1 and layer-3 */
+    }
+
+    .layer-3 {
+      top: 35px;
+      left: 100px;
+      background-color: #f59e0b;
+      z-index: 5;
+    }
+
+    /* 4. Fixed Viewport Element */
+    .fixed-pill {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 10: Positioning & Stacking Context</h1>
+
+  <!-- 1. Relative & Absolute -->
+  <h2>1. Relative Anchor + Absolute Child</h2>
+  <div class="parent-anchor">
+    Parent (<code>position: relative;</code>)
+    <div class="relative-nudge">Relative (+10px top, +15px left)</div>
+    <span class="absolute-badge">Absolute Badge</span>
+  </div>
+
+  <hr>
+
+  <!-- 2. Sticky Positioning -->
+  <h2>2. Sticky Positioning (Scroll Inside Box)</h2>
+  <div class="scroll-box">
+    <div class="sticky-banner">Sticky Header (position: sticky; top: 0)</div>
+    <div class="scroll-content">
+      <p>Scroll down inside this box to observe sticky behavior.</p>
+      <p>Line 2: Content passes beneath the pinned sticky header.</p>
+      <p>Line 3: Remains stuck until its parent container scrolls out.</p>
+      <p>Line 4: End of scrollable region.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 3. z-index & Stacking Order -->
+  <h2>3. Stacking Context & z-index</h2>
+  <div class="stack-stage">
+    <div class="layer layer-1">z-index: 1</div>
+    <div class="layer layer-2">z-index: 10 (Top)</div>
+    <div class="layer layer-3">z-index: 5</div>
+  </div>
+
+  <!-- 4. Fixed Element -->
+  <div class="fixed-pill">Fixed (Bottom-Right Viewport)</div>
+
+</body>
+</html>
