@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>11 - Flexbox Container</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Flexbox Architecture (One-Dimensional Layout):
+          - Enabling `display: flex;` turns an element into a Flex Container,
+            and its direct children automatically become Flex Items.
+          - Main Axis  : Primary axis along which items are laid out (defined by flex-direction).
+          - Cross Axis : Perpendicular axis to the Main Axis.
+
+       2. Core Container Properties:
+          - flex-direction  : Establishes Main Axis direction
+                              (row | row-reverse | column | column-reverse).
+          - justify-content : Aligns items along the MAIN axis
+                              (flex-start | flex-end | center | space-between | space-around | space-evenly).
+          - align-items     : Aligns items along the CROSS axis
+                              (stretch | flex-start | flex-end | center | baseline).
+          - flex-wrap       : Controls single-line vs multi-line wrapping
+                              (nowrap | wrap | wrap-reverse).
+          - align-content   : Aligns wrapped lines along the Cross Axis (only works when flex-wrap: wrap).
+          - gap             : Clean spacing between flex items without outer margin hacks.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    .item {
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: bold;
+      padding: 10px 16px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    /* 1. Main Axis Alignment (justify-content) */
+    .flex-justify {
+      display: flex;
+      justify-content: space-between;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* 2. Cross Axis Alignment (align-items) */
+    .flex-align {
+      display: flex;
+      justify-content: center; /* Main Axis Center */
+      align-items: center;     /* Cross Axis Center */
+      gap: 12px;
+      height: 110px;
+      background-color: #1e293b;
+      border: 1px dashed #475569;
+      border-radius: 8px;
+    }
+
+    /* 3. Direction & Wrapping */
+    .flex-wrap-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+      max-width: 340px;
+    }
+
+    .flex-wrap-box .item {
+      width: 95px;
+      background-color: #10b981;
+    }
+
+    /* 4. Column Axis Switch */
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* Cross axis is now horizontal */
+      gap: 8px;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .flex-column .item {
+      background-color: #f59e0b;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 11: Flexbox Container</h1>
+
+  <!-- 1. Main Axis Distribution -->
+  <h2>1. Main Axis Alignment (<code>justify-content: space-between</code>)</h2>
+  <div class="flex-justify">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+  </div>
+
+  <hr>
+
+  <!-- 2. True Centering (Main + Cross Axis) -->
+  <h2>2. Perfect Centering (<code>justify-content</code> + <code>align-items</code>)</h2>
+  <div class="flex-align">
+    <div class="item">Centered A</div>
+    <div class="item" style="padding: 20px 16px;">Centered B (Taller)</div>
+  </div>
+
+  <hr>
+
+  <!-- 3. Multi-Line Wrapping -->
+  <h2>3. Wrapping & Gap (<code>flex-wrap: wrap</code>)</h2>
+  <div class="flex-wrap-box">
+    <div class="item">Box 1</div>
+    <div class="item">Box 2</div>
+    <div class="item">Box 3</div>
+    <div class="item">Box 4</div>
+    <div class="item">Box 5</div>
+  </div>
+
+  <hr>
+
+  <!-- 4. Axis Inversion -->
+  <h2>4. Column Direction (<code>flex-direction: column</code>)</h2>
+  <div class="flex-column">
+    <div class="item">Top Item</div>
+    <div class="item">Middle Item</div>
+    <div class="item">Bottom Item</div>
+  </div>
+
+</body>
+</html>
