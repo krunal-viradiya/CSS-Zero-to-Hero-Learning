@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>12 - Flexbox Items</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Flex Item Sizing Properties:
+          - flex-basis  : Initial main-axis size of a flex item before remaining
+                          space is distributed (auto | px | % | rem).
+          - flex-grow   : Growth factor determining how much available positive space
+                          an item absorbs relative to siblings (default: 0).
+          - flex-shrink : Shrink factor determining how much an item compresses when
+                          total item width exceeds container space (default: 1).
+
+       2. The `flex` Shorthand (Recommended):
+          - Syntax: flex: <flex-grow> <flex-shrink> <flex-basis>;
+          - Common presets:
+            * flex: 1;       -> Equivalent to flex: 1 1 0%; (Equal width columns)
+            * flex: auto;    -> Equivalent to flex: 1 1 auto; (Grows/shrinks by content)
+            * flex: none;    -> Equivalent to flex: 0 0 auto; (Completely rigid)
+
+       3. Individual Ordering & Alignment:
+          - order      : Changes visual render sequence without altering HTML DOM
+                         (default: 0; accepts negative and positive integers).
+          - align-self : Overrides container's `align-items` for a single specific item
+                         (auto | flex-start | flex-end | center | stretch).
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    .flex-row {
+      display: flex;
+      gap: 10px;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .box {
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* 1. flex-grow Ratio Allocation */
+    .grow-1 {
+      flex-grow: 1; /* Absorbs 1 share of extra space */
+    }
+
+    .grow-2 {
+      flex-grow: 2; /* Absorbs 2 shares (double growth rate) */
+      background-color: #10b981;
+    }
+
+    /* 2. flex-shrink Control */
+    .shrink-container {
+      max-width: 400px; /* Constrained width to force shrinking */
+    }
+
+    .no-shrink {
+      flex-basis: 180px;
+      flex-shrink: 0; /* Refuses to shrink below 180px */
+      background-color: #ef4444;
+    }
+
+    .can-shrink {
+      flex-basis: 180px;
+      flex-shrink: 1; /* Compresses to fit inside container */
+    }
+
+    /* 3. Visual Reordering (order) */
+    .order-first {
+      order: -1; /* Moves visually to start despite being last in HTML */
+      background-color: #f59e0b;
+      color: #000;
+    }
+
+    /* 4. Individual Cross-Axis Override (align-self) */
+    .tall-row {
+      height: 110px;
+      align-items: flex-start; /* Default alignment for all items */
+    }
+
+    .self-center {
+      align-self: center;
+      background-color: #8b5cf6;
+    }
+
+    .self-end {
+      align-self: flex-end;
+      background-color: #ec4899;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 12: Flexbox Items</h1>
+
+  <!-- 1. flex-grow -->
+  <h2>1. Distributing Space (<code>flex-grow</code>)</h2>
+  <div class="flex-row">
+    <div class="box grow-1">flex-grow: 1</div>
+    <div class="box grow-2">flex-grow: 2 (Double)</div>
+    <div class="box grow-1">flex-grow: 1</div>
+  </div>
+
+  <hr>
+
+  <!-- 2. flex-shrink & flex-basis -->
+  <h2>2. Preventing Compression (<code>flex-shrink: 0</code>)</h2>
+  <div class="flex-row shrink-container">
+    <div class="box no-shrink">Rigid (180px, shrink: 0)</div>
+    <div class="box can-shrink">Flexible (shrink: 1)</div>
+    <div class="box can-shrink">Flexible (shrink: 1)</div>
+  </div>
+
+  <hr>
+
+  <!-- 3. Visual Ordering -->
+  <h2>3. Visual Reordering (<code>order</code>)</h2>
+  <div class="flex-row">
+    <div class="box">HTML #1 (order: 0)</div>
+    <div class="box">HTML #2 (order: 0)</div>
+    <div class="box order-first">HTML #3 (order: -1)</div>
+  </div>
+
+  <hr>
+
+  <!-- 4. Individual Cross-Axis Override -->
+  <h2>4. Individual Alignment (<code>align-self</code>)</h2>
+  <div class="flex-row tall-row">
+    <div class="box">Default (flex-start)</div>
+    <div class="box self-center">align-self: center</div>
+    <div class="box self-end">align-self: flex-end</div>
+  </div>
+
+</body>
+</html>
