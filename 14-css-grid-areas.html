@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>14 - CSS Grid Areas & Spanning</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Line-Based Track Spanning:
+          - Grid tracks are bounded by numbered Grid Lines (starting at 1).
+          - grid-column : <start-line> / <end-line> (or `span <count>`).
+          - grid-row    : <start-line> / <end-line> (or `span <count>`).
+          - Negative line indices count from the end (-1 = last explicit line).
+
+       2. Named Template Areas (`grid-template-areas`):
+          - Maps out visual ASCII-style layout blueprints directly on the container.
+          - Each string represents a row; identical adjacent names merge into
+            a single rectangular cell.
+          - Use a dot (`.`) to leave a grid cell explicitly empty.
+          - Child elements bind to a zone using `grid-area: <area-name>;`.
+
+       3. Grid Alignment Controls:
+          - justify-items / align-items : Aligns all items inside their respective cells.
+          - place-items                 : Shorthand for `<align-items> <justify-items>`.
+          - justify-self / align-self   : Overrides cell alignment for a single item.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    .cell {
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: bold;
+      padding: 14px;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* 1. Line-Based Spanning */
+    .span-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .span-full {
+      grid-column: 1 / -1; /* Spans from first line to last line */
+      background-color: #0284c7;
+    }
+
+    .span-two-rows {
+      grid-row: span 2;
+      background-color: #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 2. Named Grid Template Areas (Holy Grail Layout) */
+    .layout-blueprint {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      grid-template-rows: 50px 140px 45px;
+      grid-template-areas:
+        "header  header"
+        "sidebar main"
+        "footer  footer";
+      gap: 10px;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .area-header  { grid-area: header;  background-color: #6366f1; }
+    .area-sidebar { grid-area: sidebar; background-color: #8b5cf6; }
+    .area-main    { grid-area: main;    background-color: #ec4899; }
+    .area-footer  { grid-area: footer;  background-color: #334155; }
+
+    /* 3. Cell Alignment (place-items) */
+    .align-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      height: 110px;
+      place-items: center; /* Centers items both vertically & horizontally inside cells */
+      gap: 10px;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .align-grid .cell {
+      background-color: #f59e0b;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 14: CSS Grid Areas & Spanning</h1>
+
+  <!-- 1. Line-Based Spanning -->
+  <h2>1. Line Spanning (<code>grid-column</code> & <code>grid-row</code>)</h2>
+  <div class="span-grid">
+    <div class="cell span-full">Header (grid-column: 1 / -1)</div>
+    <div class="cell span-two-rows">Sidebar (grid-row: span 2)</div>
+    <div class="cell">Content A</div>
+    <div class="cell">Content B</div>
+    <div class="cell">Content C</div>
+    <div class="cell">Content D</div>
+  </div>
+
+  <hr>
+
+  <!-- 2. Named Grid Areas -->
+  <h2>2. Visual Blueprint (<code>grid-template-areas</code>)</h2>
+  <div class="layout-blueprint">
+    <header class="cell area-header">Header</header>
+    <aside class="cell area-sidebar">Sidebar</aside>
+    <main class="cell area-main">Main Content</main>
+    <footer class="cell area-footer">Footer</footer>
+  </div>
+
+  <hr>
+
+  <!-- 3. Cell Content Alignment -->
+  <h2>3. Cell Alignment (<code>place-items: center</code>)</h2>
+  <div class="align-grid">
+    <div class="cell">Centered in Cell 1</div>
+    <div class="cell">Centered in Cell 2</div>
+  </div>
+
+</body>
+</html>
