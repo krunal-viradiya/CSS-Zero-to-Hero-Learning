@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15 - Media Queries & Responsive Breakpoints</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Viewport Meta Tag (Mandatory Prerequisite):
+          - `<meta name="viewport" content="width=device-width, initial-scale=1.0">`
+          - Instructs mobile browsers to match layout width to physical screen width
+            instead of rendering a zoomed-out 980px desktop canvas.
+
+       2. Mobile-First Architecture (Industry Standard):
+          - Base CSS rules target small screens (mobile) by default.
+          - Progressive enhancements are layered upward using `min-width` queries.
+          - Benefits: Cleaner overrides, lighter mobile payloads, easier scaling.
+
+       3. Standard Breakpoint Tiers:
+          - Mobile  : < 640px  (Base styles, single column)
+          - Tablet  : >= 640px or >= 768px (`@media (min-width: 768px)`)
+          - Desktop : >= 1024px (`@media (min-width: 1024px)`)
+
+       4. User Preference & Hardware Media Features:
+          - `@media (orientation: landscape | portrait)`
+          - `@media (prefers-color-scheme: dark | light)`
+          - `@media (prefers-reduced-motion: reduce)`
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Mobile-First Responsive Grid (Base: 1 Column) */
+    .responsive-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .card {
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /* Tablet Breakpoint (>= 640px): Switches to 2 Columns */
+    @media (min-width: 640px) {
+      .responsive-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card {
+        background-color: #10b981;
+      }
+    }
+
+    /* Desktop Breakpoint (>= 960px): Switches to 4 Columns */
+    @media (min-width: 960px) {
+      .responsive-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .card {
+        background-color: #8b5cf6;
+      }
+    }
+
+    /* 2. Active Viewport Indicator Banner */
+    .device-banner {
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+      background-color: #ef4444;
+      color: #fff;
+    }
+
+    .device-banner::after {
+      content: "Mobile Viewport (< 640px)";
+    }
+
+    @media (min-width: 640px) and (max-width: 959px) {
+      .device-banner {
+        background-color: #f59e0b;
+        color: #000;
+      }
+      .device-banner::after {
+        content: "Tablet Viewport (640px – 959px)";
+      }
+    }
+
+    @media (min-width: 960px) {
+      .device-banner {
+        background-color: #0284c7;
+        color: #fff;
+      }
+      .device-banner::after {
+        content: "Desktop Viewport (>= 960px)";
+      }
+    }
+
+    /* 3. Orientation & Accessibility Queries */
+    .orientation-box {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    @media (orientation: landscape) {
+      .orientation-box {
+        border-left: 4px solid #2ecc71;
+      }
+    }
+
+    @media (orientation: portrait) {
+      .orientation-box {
+        border-left: 4px solid #e67e22;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 15: Media Queries & Breakpoints</h1>
+
+  <!-- 1. Active Screen Width Readout -->
+  <h2>1. Live Viewport Detector (Resize Window to Test)</h2>
+  <div class="device-banner"></div>
+
+  <hr>
+
+  <!-- 2. Mobile-First Adaptive Grid -->
+  <h2>2. Mobile-First Grid (1 &rarr; 2 &rarr; 4 Columns)</h2>
+  <div class="responsive-grid">
+    <div class="card">Card 01</div>
+    <div class="card">Card 02</div>
+    <div class="card">Card 03</div>
+    <div class="card">Card 04</div>
+  </div>
+
+  <hr>
+
+  <!-- 3. Hardware Orientation Feature -->
+  <h2>3. Orientation Media Feature</h2>
+  <div class="orientation-box">
+    Left border shifts green in <strong>Landscape</strong> mode and orange in <strong>Portrait</strong> mode.
+  </div>
+
+</body>
+</html>
