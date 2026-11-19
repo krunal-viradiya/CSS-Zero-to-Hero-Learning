@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>16 - Responsive Images & Media</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Fluid Image Scaling (Preventing Overflow):
+          - max-width: 100%; -> Ensures image never exceeds its parent container width
+                               while preventing upscaling beyond natural resolution.
+          - height: auto;    -> Preserves intrinsic aspect ratio dynamically.
+
+       2. Framing & Cropping (`object-fit` & `object-position`):
+          - object-fit:
+            * cover   : Fills container completely, cropping overflow edges (cards/avatars).
+            * contain : Fits entire image inside container without cropping (logos).
+            * fill    : Stretches image to match box (causes distortion).
+          - object-position : Sets focal point when cropped (e.g., `top center`, `50% 20%`).
+
+       3. Aspect Ratio Locking (`aspect-ratio`):
+          - Enforces clean geometric proportions (`16 / 9`, `1 / 1`, `4 / 3`) without
+            legacy padding-bottom percentage hacks. Prevents Cumulative Layout Shift (CLS).
+
+       4. Responsive HTML Media Elements:
+          - `srcset` & `sizes` : Serves resolution-appropriate assets based on DPR/viewport.
+          - `<picture>`        : Art direction (switches completely different image crops
+                                 at specific media query breakpoints).
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Fluid Image Pattern */
+    .fluid-wrapper {
+      max-width: 420px;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .fluid-img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    /* 2. object-fit Comparison Grid */
+    .fit-grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .fit-card {
+      width: 180px;
+      background-color: #1e293b;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .fit-card img {
+      width: 100%;
+      height: 120px;
+      background-color: #0f172a;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+
+    .fit-cover   { object-fit: cover; object-position: center; }
+    .fit-contain { object-fit: contain; }
+    .fit-fill    { object-fit: fill; }
+
+    /* 3. Modern aspect-ratio Container */
+    .video-frame {
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 16 / 9; /* Locks 16:9 widescreen ratio automatically */
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 16: Responsive Images & Media</h1>
+
+  <!-- 1. Fluid Image Scaling -->
+  <h2>1. Fluid Image (<code>max-width: 100%; height: auto;</code>)</h2>
+  <div class="fluid-wrapper">
+    <img 
+      class="fluid-img"
+      src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='220'%3E%3Crect width='600' height='220' fill='%23334155'/%3E%3Ctext x='50%25' y='50%25' fill='%23f8fafc' font-family='Arial' font-size='22' dominant-baseline='middle' text-anchor='middle'%3E600x220 Intrinsic SVG (Scales Smoothly)%3C/text%3E%3C/svg%3E" 
+      alt="Fluid scaling demo">
+  </div>
+
+  <hr>
+
+  <!-- 2. object-fit Modes -->
+  <h2>2. Framing & Cropping (<code>object-fit</code>)</h2>
+  <div class="fit-grid">
+    <div class="fit-card">
+      <img class="fit-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='100'%3E%3Crect width='300' height='100' fill='%2310b981'/%3E%3Ccircle cx='150' cy='50' r='35' fill='%23ffffff'/%3E%3C/svg%3E" alt="Cover">
+      <strong>object-fit: cover</strong><br>(Fills box, crops edges)
+    </div>
+
+    <div class="fit-card">
+      <img class="fit-contain" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='100'%3E%3Crect width='300' height='100' fill='%238b5cf6'/%3E%3Ccircle cx='150' cy='50' r='35' fill='%23ffffff'/%3E%3C/svg%3E" alt="Contain">
+      <strong>object-fit: contain</strong><br>(Fits inside, letterboxed)
+    </div>
+
+    <div class="fit-card">
+      <img class="fit-fill" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='100'%3E%3Crect width='300' height='100' fill='%23f59e0b'/%3E%3Ccircle cx='150' cy='50' r='35' fill='%23ffffff'/%3E%3C/svg%3E" alt="Fill">
+      <strong>object-fit: fill</strong><br>(Stretches to fit box)
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 3. Native Aspect Ratio -->
+  <h2>3. Geometric Ratio Lock (<code>aspect-ratio: 16 / 9</code>)</h2>
+  <div class="video-frame">
+    16 : 9 Locked Media Container
+  </div>
+
+</body>
+</html>
