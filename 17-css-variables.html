@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>17 - CSS Variables (Custom Properties)</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Syntax & Scope:
+          - Declaration : `--variable-name: value;` (Case-sensitive, always starts with `--`).
+          - Retrieval   : `var(--variable-name, fallback-value)`
+          - Global Scope: Defined inside `:root` (matches `<html>` with higher specificity).
+          - Local Scope : Defined inside any selector; cascades strictly to its descendants.
+
+       2. Cascade & Dynamic Re-evaluation:
+          - Unlike Sass/LESS preprocessor variables (compiled statically), CSS Custom
+            Properties live in the browser DOM at runtime.
+          - Overriding a variable inside a child class or media query automatically
+            updates all dependent properties without rewriting CSS rules.
+
+       3. Runtime JavaScript Interoperability:
+          - Read  : `getComputedStyle(element).getPropertyValue('--var-name')`
+          - Write : `element.style.setProperty('--var-name', 'new-value')`
+       ========================================================================== */
+
+    /* 1. Global Design Tokens (:root) */
+    :root {
+      --bg-page: #121212;
+      --bg-card: #1e293b;
+      --text-main: #e2e8f0;
+      --accent: #38bdf8;
+      --spacing-md: 16px;
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 2. Consuming Global Tokens + Fallback Value */
+    .token-card {
+      background-color: var(--bg-card);
+      border-left: 4px solid var(--accent);
+      padding: var(--spacing-md);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      /* Uses #f59e0b fallback because --undefined-var does not exist */
+      outline: 1px dashed var(--undefined-var, #f59e0b);
+    }
+
+    /* 3. Local Scope Variable Override (Component Theming) */
+    .theme-emerald {
+      --bg-card: #064e3b;
+      --accent: #10b981;
+    }
+
+    .theme-rose {
+      --bg-card: #4c0519;
+      --accent: #f43f5e;
+    }
+
+    .btn {
+      background-color: var(--accent);
+      color: #0f172a;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 17: CSS Variables (Custom Properties)</h1>
+
+  <!-- 1. Global Scope & Fallbacks -->
+  <h2>1. Global Tokens (<code>:root</code>) & Fallback Values</h2>
+  <div class="token-card">
+    Styled using <code>:root</code> design tokens with a dashed fallback outline.
+    <br>
+    <button class="btn">Default Accent Button</button>
+  </div>
+
+  <hr>
+
+  <!-- 2. Local Scope Overrides -->
+  <h2>2. Local Scope Overrides (Component Themes)</h2>
+  <div class="token-card theme-emerald">
+    Overriding <code>--bg-card</code> and <code>--accent</code> locally inside <code>.theme-emerald</code>.
+    <br>
+    <button class="btn">Emerald Theme Button</button>
+  </div>
+
+  <div class="token-card theme-rose">
+    Overriding <code>--bg-card</code> and <code>--accent</code> locally inside <code>.theme-rose</code>.
+    <br>
+    <button class="btn">Rose Theme Button</button>
+  </div>
+
+  <hr>
+
+  <!-- 3. Live JavaScript Runtime Mutation -->
+  <h2>3. Dynamic Runtime Update via JavaScript</h2>
+  <button class="btn" onclick="document.documentElement.style.setProperty('--accent', '#a855f7')">
+    Switch Global --accent to Purple
+  </button>
+
+</body>
+</html>
