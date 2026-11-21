@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>18 - Pseudo-Classes & Pseudo-Elements</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Pseudo-Classes (`:single-colon`) - State & Structural Targeting:
+          Selects elements based on dynamic user interaction or DOM tree position.
+          - Interactive States:
+            * :hover        -> Triggered when pointer rests over element.
+            * :active       -> Triggered during the exact moment of click/press.
+            * :focus-visible-> Triggered when focused via keyboard navigation (accessibility).
+            * :disabled     -> Targets disabled form controls.
+          - Structural Position:
+            * :first-child / :last-child -> First or last sibling inside parent.
+            * :nth-child(pattern)        -> Matches formula (`odd`, `even`, `2n+1`, `3`).
+            * :not(selector)             -> Negation filter (excludes matching elements).
+
+       2. Pseudo-Elements (`::double-colon`) - Virtual Sub-Element Styling:
+          Generates virtual DOM nodes or targets specific fragments of an element.
+          - ::before / ::after -> Inserts cosmetic content inside an element
+                                  (MUST include the `content: "";` property to render).
+          - ::placeholder      -> Styles hint text inside `<input>` or `<textarea>`.
+          - ::selection        -> Styles text highlighted by the user's cursor.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* Global Custom Text Selection */
+    ::selection {
+      background-color: #38bdf8;
+      color: #0f172a;
+    }
+
+    /* 1. Interactive Pseudo-Classes */
+    .interactive-btn {
+      background-color: #2563eb;
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .interactive-btn:hover {
+      background-color: #1d4ed8;
+    }
+
+    .interactive-btn:active {
+      transform: scale(0.96);
+    }
+
+    .interactive-btn:focus-visible {
+      outline: 3px solid #facc15;
+      outline-offset: 3px;
+    }
+
+    /* 2. Structural Pseudo-Classes (:nth-child, :not) */
+    .list-demo {
+      list-style: none;
+      background-color: #1e293b;
+      border-radius: 8px;
+      overflow: hidden;
+      max-width: 340px;
+    }
+
+    .list-demo li {
+      padding: 10px 14px;
+    }
+
+    /* Zebra striping for even rows */
+    .list-demo li:nth-child(even) {
+      background-color: #0f172a;
+    }
+
+    /* Bottom border on every item EXCEPT the last one */
+    .list-demo li:not(:last-child) {
+      border-bottom: 1px solid #334155;
+    }
+
+    /* 3. Pseudo-Elements (::before, ::after, ::placeholder) */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #064e3b;
+      color: #6ee7b7;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .status-badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+    }
+
+    .custom-input {
+      display: block;
+      margin-top: 12px;
+      background-color: #1e293b;
+      border: 1px solid #475569;
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: #fff;
+      width: 260px;
+    }
+
+    .custom-input::placeholder {
+      color: #f59e0b;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 18: Pseudo-Classes & Pseudo-Elements</h1>
+
+  <!-- 1. Interactive States -->
+  <h2>1. Interactive States (<code>:hover</code>, <code>:active</code>, <code>:focus-visible</code>)</h2>
+  <button class="interactive-btn">Hover, Click, or Tab to Focus</button>
+
+  <hr>
+
+  <!-- 2. Structural Selectors -->
+  <h2>2. Structural Targeting (<code>:nth-child(even)</code> & <code>:not(:last-child)</code>)</h2>
+  <ul class="list-demo">
+    <li>Item 1 (Odd)</li>
+    <li>Item 2 (Even - Striped)</li>
+    <li>Item 3 (Odd)</li>
+    <li>Item 4 (Even - Striped, No Bottom Border)</li>
+  </ul>
+
+  <hr>
+
+  <!-- 3. Virtual Pseudo-Elements -->
+  <h2>3. Virtual Elements (<code>::before</code>, <code>::placeholder</code>, <code>::selection</code>)</h2>
+  <span class="status-badge">System Online (Dot added via ::before)</span>
+
+  <input type="text" class="custom-input" placeholder="Styled via ::placeholder">
+  <p style="margin-top: 8px;"><small>Highlight any text on this page with your mouse to test <code>::selection</code>.</small></p>
+
+</body>
+</html>
