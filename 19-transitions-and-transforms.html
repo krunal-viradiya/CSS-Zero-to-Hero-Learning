@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>19 - Transitions & Transforms</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. CSS Transforms (`transform` Property):
+          - Modifies an element's visual coordinate space without affecting surrounding
+            document layout flow (GPU-accelerated).
+          - Core 2D Transform Functions:
+            * translate(x, y) : Moves element horizontally/vertically (px, %).
+            * scale(x, y)     : Resizes element proportionally (1 = 100%, 1.1 = +10%).
+            * rotate(deg)     : Rotates clockwise (+) or counter-clockwise (-).
+            * skew(x-deg, y)  : Slants element along X and Y axes.
+          - transform-origin  : Sets the pivot point for rotation/scaling (default: center).
+
+       2. CSS Transitions (`transition` Property):
+          - Smoothly interpolates property changes between two states (e.g., default -> :hover).
+          - Shorthand: transition: <property> <duration> <timing-function> <delay>;
+          - Timing Functions:
+            * ease        : Slow start, fast middle, slow end (default).
+            * linear      : Constant speed throughout.
+            * ease-in-out : Smooth symmetrical acceleration and deceleration.
+            * cubic-bezier(x1, y1, x2, y2) : Custom spring/bounce velocity curves.
+
+       3. Performance Best Practice:
+          - Animate ONLY `transform` and `opacity` for 60fps compositor-layer rendering.
+          - Avoid animating `width`, `height`, or `margin` (triggers expensive layout reflows).
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    .demo-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      width: 150px;
+      height: 90px;
+      background-color: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* 1. 2D Transform Functions on Hover */
+    .fx-translate {
+      transition: transform 0.25s ease, background-color 0.25s ease;
+    }
+    .fx-translate:hover {
+      transform: translateY(-8px);
+      background-color: #2563eb;
+    }
+
+    .fx-scale {
+      transition: transform 0.25s ease, background-color 0.25s ease;
+    }
+    .fx-scale:hover {
+      transform: scale(1.1);
+      background-color: #10b981;
+      color: #000;
+    }
+
+    .fx-rotate {
+      transition: transform 0.35s ease;
+    }
+    .fx-rotate:hover {
+      transform: rotate(12deg);
+    }
+
+    .fx-skew {
+      transition: transform 0.25s ease;
+    }
+    .fx-skew:hover {
+      transform: skewX(-10deg);
+    }
+
+    /* 2. Timing Function Comparison (Hover Track to Race) */
+    .race-track {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .runner {
+      width: 110px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #fff;
+      transition-property: transform;
+      transition-duration: 0.8s;
+    }
+
+    .race-track:hover .runner {
+      transform: translateX(220px);
+    }
+
+    .t-linear { background-color: #3b82f6; transition-timing-function: linear; }
+    .t-ease   { background-color: #ec4899; transition-timing-function: ease-in-out; }
+    .t-bounce { background-color: #f59e0b; color: #000; transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+    /* 3. Chained Transforms & Custom Pivot (transform-origin) */
+    .origin-box {
+      width: 160px;
+      height: 70px;
+      background-color: #8b5cf6;
+      color: #fff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      transform-origin: top left; /* Pivots around top-left corner instead of center */
+      transition: transform 0.3s ease;
+    }
+
+    .origin-box:hover {
+      transform: rotate(8deg) scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 19: Transitions & Transforms</h1>
+
+  <!-- 1. Core 2D Transforms -->
+  <h2>1. 2D Transform Functions (Hover Each Card)</h2>
+  <div class="demo-row">
+    <div class="card fx-translate">translateY(-8px)</div>
+    <div class="card fx-scale">scale(1.1)</div>
+    <div class="card fx-rotate">rotate(12deg)</div>
+    <div class="card fx-skew">skewX(-10deg)</div>
+  </div>
+
+  <hr>
+
+  <!-- 2. Timing Functions -->
+  <h2>2. Transition Timing Curves (Hover Track to Compare)</h2>
+  <div class="race-track">
+    <div class="runner t-linear">linear</div>
+    <div class="runner t-ease">ease-in-out</div>
+    <div class="runner t-bounce">cubic-bezier</div>
+  </div>
+
+  <hr>
+
+  <!-- 3. Custom Transform Origin & Chaining -->
+  <h2>3. Custom Pivot (<code>transform-origin: top left</code>)</h2>
+  <div class="origin-box">
+    Hover to Pivot Top-Left
+  </div>
+
+</body>
+</html>
