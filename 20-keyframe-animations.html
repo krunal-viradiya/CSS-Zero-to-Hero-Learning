@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>20 - Keyframe Animations</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Keyframe Animations (`@keyframes` + `animation` property):
+          - Unlike `transition` (which requires a state trigger like :hover and only
+            interpolates A -> B), `@keyframes` runs automatically and supports
+            multi-step timelines (`0%` to `100%` or `from` -> `to`).
+
+       2. Core Animation Sub-Properties:
+          - animation-name            : Identifier matching the `@keyframes` rule.
+          - animation-duration        : Length of one complete cycle (`1s`, `500ms`).
+          - animation-timing-function : Velocity curve (`ease`, `linear`, `ease-in-out`).
+          - animation-delay           : Wait time before playback starts.
+          - animation-iteration-count : Number of loops (`1`, `3`, `infinite`).
+          - animation-direction       : Playback flow (`normal`, `reverse`, `alternate`).
+          - animation-fill-mode       : Styles applied before/after playback:
+                                        * forwards  -> Retains final (`100%`) keyframe state.
+                                        * backwards -> Applies `0%` state during delay.
+                                        * both      -> Combines forwards and backwards.
+          - animation-play-state      : Controls execution (`running` | `paused`).
+
+       3. Accessibility Best Practice:
+          - Always respect `@media (prefers-reduced-motion: reduce)` to disable or
+            tone down non-essential motion for motion-sensitive users.
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    .demo-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    /* 1. Continuous Spinner (infinite + linear) */
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 5px solid #334155;
+      border-top-color: #38bdf8;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* 2. Multi-Step Pulse Glow (0% -> 50% -> 100% + alternate) */
+    @keyframes pulse-glow {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      }
+      50% {
+        transform: scale(1.06);
+        box-shadow: 0 0 0 12px rgba(16, 185, 129, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
+    }
+
+    .pulse-badge {
+      background-color: #10b981;
+      color: #064e3b;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 999px;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    /* 3. Fill Mode Entrance (forwards retains final state) */
+    @keyframes slide-up-fade {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .entrance-card {
+      background-color: #1e293b;
+      border-left: 4px solid #8b5cf6;
+      padding: 14px 18px;
+      border-radius: 6px;
+      max-width: 380px;
+      /* `forwards` prevents snapping back to opacity: 0 after finishing */
+      animation: slide-up-fade 0.8s ease-out forwards;
+    }
+
+    /* 4. Interactive Play-State Control (Hover to Pause) */
+    @keyframes ping-pong {
+      0%   { transform: translateX(0); background-color: #3b82f6; }
+      100% { transform: translateX(200px); background-color: #ec4899; }
+    }
+
+    .track {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      padding: 12px;
+      border-radius: 8px;
+      max-width: 340px;
+    }
+
+    .slider-pill {
+      width: 110px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-align: center;
+      color: #fff;
+      cursor: pointer;
+      animation: ping-pong 1.6s ease-in-out infinite alternate;
+    }
+
+    .track:hover .slider-pill {
+      animation-play-state: paused;
+    }
+
+    /* 5. Accessibility: Respect Reduced Motion Preferences */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 20: Keyframe Animations</h1>
+
+  <!-- 1. Infinite Loops & Multi-Step Keyframes -->
+  <h2>1. Infinite Loops (<code>spin</code> & Multi-Step <code>pulse-glow</code>)</h2>
+  <div class="demo-row">
+    <div class="spinner" title="Linear Infinite Spin"></div>
+    <div class="pulse-badge">Live Status Pulse</div>
+  </div>
+
+  <hr>
+
+  <!-- 2. Fill Mode Entrance -->
+  <h2>2. Entrance Animation (<code>animation-fill-mode: forwards</code>)</h2>
+  <div class="entrance-card">
+    Slides upward and fades in once on page load, holding its final <code>100%</code> state permanently.
+  </div>
+
+  <hr>
+
+  <!-- 3. Alternating Direction & Play State -->
+  <h2>3. <code>alternate</code> Direction & Play State (Hover Box to Pause)</h2>
+  <div class="track">
+    <div class="slider-pill">Hover to Pause</div>
+  </div>
+
+</body>
+</html>
