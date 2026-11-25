@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>21 - Modern CSS Features</title>
+
+  <style>
+    /* ==========================================================================
+       THEORY & TECHNICAL NOTES:
+       
+       1. Fluid Sizing Math Functions:
+          - clamp(min, preferred, max) : Dynamically scales a value between a lower
+                                         and upper bound without media queries
+                                         (e.g., `clamp(1.2rem, 3vw, 2.2rem)`).
+          - min(val1, val2)            : Resolves to the smallest computed value
+                                         (e.g., `width: min(90%, 600px)`).
+          - max(val1, val2)            : Resolves to the largest computed value.
+
+       2. Native CSS Nesting:
+          - Nest child selectors directly inside parent blocks (like Sass/LESS)
+            natively in modern browsers without build tools.
+          - Use `&` to reference the parent selector (e.g., `&:hover`, `& .title`).
+
+       3. Relational `:has()` Selector ("Parent Selector"):
+          - Selects a parent or previous sibling based on its descendants or state
+            (e.g., `.card:has(input:checked)` styles the card when checked).
+
+       4. Container Queries (`@container`):
+          - Components adapt to their OWN parent container's width rather than the
+            global browser viewport (`container-type: inline-size`).
+       ========================================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    h1, h2 {
+      color: #61dafb;
+      margin-bottom: 12px;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #333;
+      margin: 20px 0;
+    }
+
+    /* 1. Fluid Math Functions (clamp & min) */
+    .fluid-box {
+      width: min(100%, 540px); /* Responsive container without max-width rule */
+      background-color: #1e293b;
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 4px solid #38bdf8;
+    }
+
+    .fluid-heading {
+      /* Scales smoothly between 18px and 28px based on viewport width */
+      font-size: clamp(1.125rem, 2.5vw, 1.75rem);
+      color: #f8fafc;
+      margin-bottom: 6px;
+    }
+
+    /* 2. Native CSS Nesting + 3. Relational :has() Selector */
+    .interactive-card {
+      width: min(100%, 360px);
+      background-color: #1e293b;
+      border: 2px solid #334155;
+      padding: 14px 16px;
+      border-radius: 8px;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+
+      /* Native CSS Nesting */
+      & label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      & input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #10b981;
+      }
+
+      /* Parent reacts automatically when child checkbox is checked */
+      &:has(input:checked) {
+        background-color: #064e3b;
+        border-color: #10b981;
+        color: #6ee7b7;
+      }
+    }
+
+    /* 4. Container Queries (@container) */
+    .resizable-wrapper {
+      container-type: inline-size; /* Enables container queries on children */
+      container-name: card-zone;
+      resize: horizontal;
+      overflow: auto;
+      width: 300px;
+      min-width: 220px;
+      max-width: 100%;
+      border: 1px dashed #64748b;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .adaptive-widget {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background-color: #2563eb;
+      color: #ffffff;
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    /* Triggers when parent container exceeds 380px (independent of screen size) */
+    @container card-zone (min-width: 380px) {
+      .adaptive-widget {
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #8b5cf6;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Module 21: Modern CSS Features</h1>
+
+  <!-- 1. Fluid Math Functions -->
+  <h2>1. Math Functions (<code>clamp()</code> & <code>min()</code>)</h2>
+  <div class="fluid-box">
+    <div class="fluid-heading">Fluid Heading via clamp(1.125rem, 2.5vw, 1.75rem)</div>
+    <p>Container width uses <code>min(100%, 540px)</code> to cap width cleanly.</p>
+  </div>
+
+  <hr>
+
+  <!-- 2. Native Nesting & :has() -->
+  <h2>2. Parent Selector (<code>:has()</code>) & Native CSS Nesting</h2>
+  <div class="interactive-card">
+    <label>
+      <input type="checkbox">
+      Toggle checkbox to style parent card via <code>:has(input:checked)</code>
+    </label>
+  </div>
+
+  <hr>
+
+  <!-- 3. Container Queries -->
+  <h2>3. Container Queries (<code>@container</code> - Drag Bottom-Right Corner to Resize)</h2>
+  <div class="resizable-wrapper">
+    <div class="adaptive-widget">
+      <span>Component Layout</span>
+      <span>Adapts at &ge; 380px container width</span>
+    </div>
+  </div>
+
+</body>
+</html>
